@@ -96,7 +96,80 @@ SELECT WEEKDAY('2011-02-13 22:23:00');
 
 ### 7. 获取星期数的函数`WEEK(d)`和`WEEKOFYEAR(d)`
 
+`WEEK(d)`计算日期`d`是一年中的第几周。`WEEK()`的双参数形势允许指定该星期是否起始于周日或周一，以及返回值的范围是否为从0~53或从1~53。
 
+~~~mysql
+SELECT WEEK('2011-02-20');
+~~~
 
+### 8. 获取天数的函数`DAYOFYEAR(d)`和`DAYOFMONTH(d)`
 
+`DAYOFYEAR(d)`函数返回`d`是一年中的第几天，范围是从1~366。
 
+~~~mysql
+SELECT DAYOFYEAR('2011-02-20');
+~~~
+
+`DAYOFMONTH(d)`函数返回指定日期在一个月中的位置，范围是从1~31。
+
+~~~mysql
+SELECT DAYOFMONTH('2011-02-20');
+~~~
+
+### 9. 获取年份、季度、小时、分钟和秒钟的函数
+
+`YEAR(date)`返回`date`对应的年份，范围是1970~2069。
+
+~~~mysql
+SELECT YEAR('11-02-03');
+~~~
+
+`QUARTER(date)`返回`date`对应的一年中的季度值，范围是从1~4。
+
+~~~mysql
+SELECT QUARTER('11-04-01');
+~~~
+
+`MINUTE(time)`返回`time`对应的分钟数，范围是从0~59。
+
+~~~mysql
+SELECT MINUTE('11-02-03 10:10:03');
+~~~
+
+`SECOND(time)`返回`time`对应的秒数，范围是从0~59。
+
+~~~mysql
+SELECT SECOND('10:05:03');
+~~~
+
+### 10. 获取日期的指定值的函数`EXTRACT(type FROM date)`
+
+`EXTRACT(type FROM date)`函数所使用的时间间隔函数类型说明符同`DATE_ADD()`或`DATE_SUB()`的相同，但它从日期中提取一部分，而不是执行日期运算。
+
+~~~mysql
+SELECT EXTRACT(YEAR FROM '2011-07-02') AS col1,
+EXTRACT(YEAR_MONTH FROM '2011-07-12 01:02:03')AS col2,
+EXTRACT(DAY_MINUTE FROM '2011-07-12 01:02:03')AS col3;
+~~~
+
+### 11. 时间和秒钟转换的函数
+
+`TIME_TO_SEC(time)`返回已转化为秒的`time`参数。
+
+~~~mysql
+SELECT TIME_TO_SEC('23:23:00');
+~~~
+
+`SEC_TO_TIME(seconds)`返回被转化为小时、分钟和秒数的`seconds`参数值，其格式为`HH:MM:SS`或`HHMMSS`。
+
+~~~mysql
+SELECT TIME_TO_SEC('23:23:00'),SEC_TO_TIME(84180);
+~~~
+
+### 12. 计算日期和时间函数
+
+计算日期和时间的函数有：`DATE_ADD()`、`ADDDATE()`、`DATE_SUB()`、`SUBDATE()`、`ADDTIME()`、`SUBTIME()`、`DATE_DIFF()`。
+
+### 13. 将日期和时间格式化的函数
+
+`DATE_FORMAT(date,format)`根据`format`指定的格式显示`date`值。
