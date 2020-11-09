@@ -66,3 +66,66 @@ CRETAE TABLE table_name[col_name data_type]
 [UNIQUE|FULLTEXT|SPATIAL][INDEX|KEY][index_name](col_name[length])[ASC|DESC]
 ~~~
 
+`UNIQUE`，`FULLTEXT`和`SPATIAL`为可选参数，分别表示唯一索引、全文索引和空间索引。`INDEX`与`KEY`为同义词，两者作用相同，用来指定创建索引；`col_name`为需要创建索引的字段列，该列必须从数据表中该定义的多个列中选择；`index_name`指定索引的名称，为可选参数，如果不指定，`MySQL`默认`col_name`为索引值；`length`为可选参数，表示索引的长度，只有字符串类型的字段才能指定索引长度；`ASC`或`DESC`指定升序或者降序的索引值存储。
+
+* 创建普通索引
+
+  最基本的索引类型，没有唯一性值类的限制，其作用只是加快对数据的访问速度。
+
+* 创建唯一索引
+
+  创建索引的主要原因是减少查询索引列操作的执行时间，尤其是对比较庞大的数据表，它与普通索引类似，不同就是索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。
+  
+* 创建单列索引
+
+  单列索引是在数据表中的某一个字段上创建的索引，一个表中可以创建多个单列索引。
+
+* 创建组合索引
+
+  组合索引是在多个字段上创建一个索引。
+
+* 创建全文索引
+
+  `FULLTEXT`全文索引可以用于全文搜索，只有`MyISAM`存储引擎支持`FULLTEXT`索引，并且只为`CHAR`、`VARCHAR`和`TEXT`列。索引总是对整个列进行，不支持局部（前缀）索引。
+
+* 创建空间索引
+
+  空间索引必须在`MyIASM`类型的表中创建，且空间类型的字段必须为非空。
+
+#### 2.2 在已经存在的表上创建索引
+
+在已经存在的表中创建索引，可以使用`ALTER TABLE`语句或者`CREATE INDEX`语句。
+
+* 使用`ALTER TABLE`语句创建索引
+
+  ~~~mysql
+  ALTER TABLE table_name ADD [UNIQUE|FULLTEXT|SPATIAL] [INDEX|KEY]
+  [index_name](col_name[length],...)[ASC|DESC]
+  ~~~
+
+* 使用`CREATE INDEX`创建索引
+
+  `CREATE INDEX`语句可以在已经存在的表上添加索引，`MySQL`中`CREATE INDEX`被映射到一个`ALTER TABLE`语句上，语法格式为：
+
+  ~~~mysql
+  CREATE [UNIQUE|FULLTEXT|SPATIAL]INDEX index_name
+  ON table_name(col_name[legth],...)[ASC|DESC]
+  ~~~
+
+### 3. 删除索引
+
+#### 3.1 使用`ALTER TABLE`删除索引
+
+语法格式如下：
+
+~~~mysql
+ALTER TABLE table_name DROP INDEX index_name;
+~~~
+
+#### 3.2 使用`DROP INDEX`语句删除索引
+
+语法格式如下：
+
+~~~mysql
+DROP INDEX index_name ON table_name;
+~~~
