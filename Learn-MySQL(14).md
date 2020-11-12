@@ -152,3 +152,85 @@ CREATE FUNCTION func_name([func_parameter])
   #### 1.6 流程控制的使用
 
   流程控制语句用来根据条件控制语句的执行。`MySQL`中的用来构造控制流程的语句有：`IF`语句、`CASE`语句、`LOOP`语句、`WHILE`语句、`LEAVE`语句、`ITERATE`语句、`REPEAT`语句和`WHITE`语句。
+
+* `IF`语句
+
+  `IF`语句包含多个条件判断，根据判断的结果为`TRUE`或者`FALSE`执行相应的语句，格式如下：
+
+  ~~~mysql
+  IF expr_condition THEN statement_list
+  	[ELSEIF expr_condition THEN statement_list]...
+  	[ELSE statement_list]
+  END IF
+  ~~~
+
+  `IF`实现了一个基本的条件构造。如果`expr_condition`求值为真，相应的`SQL`语句列表被执行；如果没有`expr_condition`匹配，则`ELSE`子句里的语句列表被执行。`statement_list`可以包含一个或多个语句。
+
+* `CASE`语句
+
+  `CASE`是另一个进行条件判断的语句，该语句有2中语句格式，第一种如下：
+
+  ~~~mysql
+  CASE case_expr
+  	WHEN when_value THEN statement_list
+  	[WHEN when_value THEN statement_list]...
+  	[ELSE statement_list]
+  END CASE
+  ~~~
+
+  其中，`case_expr`参数表示条件判断的表达式，决定了哪一个`WHEN`子句会被执行；`when_value`参数表达式可能的值，如果某个`when_value`表达式与`case_expr`表达式结果相同，则执行对应`THEN`关键字后的`statement_list`中的语句；`statement_list`参数表示不同`when_value`值的执行语句。
+
+* `LOOP`语句
+
+  `LOOP`循环语句用来重复执行某些语句，与`IF`和`CASE`语句相比，`LOOP`只是创建一个循环操作的过程，并不进行条件判断。`LOOP`内的语句一直重复执行直到循环被退出，跳出循环过程，使用`LEAVE`子句，`LOOP`语句的基本格式如下：
+
+  ~~~mysql
+  [loop_label:]LOOP
+  	statement_list
+  END LOOP[loop_label]
+  ~~~
+
+  `loop_label`表示`LOOP`语句的标注名称，该参数可以省略；`statement_list`参数表示需要循环执行的语句。
+
+* `LEAVE`语句
+
+  `LEAVE`语句用来退出任何被标注的流程控制构造，格式如下：
+
+  ~~~mysql
+  LEAVE label
+  ~~~
+
+* `ITERATE`语句
+
+  `ITERATE`语句将执行顺序转到语句段开头处，格式如下：
+
+  ~~~mysql
+  ITERATE label
+  ~~~
+
+  `ITERATE`纸可以出现在`LOOP`、`REPEAT`、`WHILE`语句内，`ITERATE`的意思为再次循环，`label`参数表示循环的表只。`ITERATE`语句必须跟在循环标志前面。
+
+* `REPEAT`语句
+
+  `REPEAT`语句创建一个带条件判断的循环过程，每次语句执行完毕之后，会对条件表达式进行判断，如果表达式为真，则循环结束；否则重复执行循环中的语句。基本格式如下：
+
+  ~~~mysql
+  [repeat_label:]REPEAT
+  	statement_list
+  UNTIL expr_condition
+  END REPEAT [repeat_label]
+  ~~~
+
+  `repeat_label`为`REPEAT`语句的标注名称，该参数可以省略；`REPEAT`语句内的语句或语句群被重复，直至`expr_condition`为真。
+
+* `WHILE`语句
+
+  `WHILE`语句创建一个带条件判断的循环过程，与`REPEAT`不同，`WHILE`在执行语句执行时，先对指定的表达式进行判断，如果为真，则执行循环内的语句，否则退出循环。基本格式如下：
+
+  ~~~mysql
+  [while_label:]WHILE expr_condtion DO
+  	statement_list
+  END WHILE [while_label]
+  ~~~
+
+  `while_label`为`WHILE`语句的标注名称；`	expr_condition`为进行判断的表达式，如果表达式结果为真，`WHILE`语句内的语句或语句群被执行，直至`expe_condition`为假，退出循环。
