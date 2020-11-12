@@ -234,3 +234,72 @@ CREATE FUNCTION func_name([func_parameter])
   ~~~
 
   `while_label`为`WHILE`语句的标注名称；`	expr_condition`为进行判断的表达式，如果表达式结果为真，`WHILE`语句内的语句或语句群被执行，直至`expe_condition`为假，退出循环。
+  
+  ### 2. 调用存储过程和函数
+  
+  #### 2.1 调用存储过程
+  
+  存储过程是通过`CALL`语句进行调用的，语法如下：
+  
+  ~~~mysql
+  CALL sp_name([parameter[,...]])
+  ~~~
+  
+  `CALL`语句调用一个先前用`CREATE PROCEDURE`创建的存储过程，其中`sp_name`为存储过程名称，`parameter`为存储过程的参数。
+  
+  #### 2.2 调用存储函数
+  
+  在`MySQL`中，存储函数的使用方法与`MySQL`内部函数的使用方法是一样的。换言之，用户自己定义的存储函数与`MySQL`内部函数是一个性质的。区别在于，存储函数是用户自己定义的，而内部是`MySQL`的开发者定义的。
+  
+  ### 3. 查看存储过程和函数
+  
+  `MySQL`存储了存储过程和函数的状态信息，用户可以使用`SHOW STATUS`语句或`SHOW CREATE`语句来查看，也可以直接从系统的`information_shema`数据库中查询。
+  
+  #### 3.1 `SHOW STATUS`语句查看存储过程和函数的状态
+  
+  语法格式如下：
+  
+  ~~~mysql
+  SHOW {PROCEDURE|FUNCTION} STATUS [LIKE 'pattern']
+  ~~~
+  
+  这个语句是一个`MySQL`的扩展。它返回子程序的特征，如数据库、名字、类型、创建者及创建和修改日期。如果没有指定样式，根据使用的语句，所有存储程序或存储函数的信息都被列出。`PROCEDURE`和`FUNCTION`分别表示查看存储过程和函数；`LIKE`语句表示匹配存储过程或函数的名称。
+  
+  #### 3.2 `SHOW CREATE`语句查看存储过程和函数的定义
+  
+  ~~~mysql
+  SHOW CREATE {PROCEDURE|FUNCTION} sp_name
+  ~~~
+  
+  这个语句是一个`MySQL`的扩展。类似于`SHOW CREATE TABLE`，它返回一个可用来重新创建已命名子程序的确切字符串。`PROCEDURE`和`FUNCTION`分别表示查看存储过程和函数；`LIKE`语句表示匹配存储过程或函数的名称。
+  
+  #### 3.3 从`information_schema.Routines`表中查看存储过程和函数的信息
+  
+  `MySQL`中存储过程和函数的信息存储在`information_schema`数据库下的`Routines`表中。可以通过查询该表的记录查询存储过程和函数的信息。
+  
+  ~~~mysql
+  SELECT * FROM information_shcema.Routines
+  WHERE ROUTINE_NAME='sp_name';
+  ~~~
+  
+  ### 4. 修改存储过程和函数
+  
+  使用`ALTER`语句可以修改存储过程或函数的特性。
+  
+  ~~~mysql
+  ALTER {PROCEDURE|FUNCTION} sp_name {characteristic...}
+  ~~~
+  
+  其中，`sp_name`参数表示存储过程或函数的名称；`characteristic`参数指定存储函数的特性。
+  
+  ### 5. 删除存储过程和函数
+  
+  可以使用`DROP`语句，格式如下：
+  
+  ~~~mysql
+  DROP {PROCEDURE|FUNCTION} [IF EXISTS] sp_name
+  ~~~
+  
+  这个语句被用来移除一个存储过程或函数。`sp_name`为要移除的存储过程或函数的名称。
+  
+  `IF EXISTS`子句是一个`MySQL`的扩展。如果程序或函数不存储，它可以防止发生错误，产生一个用`SHOW WARNINGS`查看的警告。
