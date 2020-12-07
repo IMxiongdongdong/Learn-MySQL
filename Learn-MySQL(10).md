@@ -83,3 +83,4 @@ SELECT INET_ATON('209.207.224.40');
 ### 7. 改变数据类型的函数
 
 `CAST(x,AS type)`和`CONVERT(x,type)`函数将一个类型的值转换为另一个类型的值，可转换的`type`有`BINARY,CHAR(n),DATE,TIME,DATETIME,DECIMAL,SIGNED,UNSIGED`。
+

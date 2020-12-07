@@ -65,3 +65,4 @@ DELETE FROM table_name [WHERE <condition>];
 ~~~
 
 `table_name`指定要执行删除操作的表；`[WHERE <condition>]`为可选参数，指定删除条件，如果没有`WHERE`子句，`DELETE`语句将删除表中的所有记录。
+
